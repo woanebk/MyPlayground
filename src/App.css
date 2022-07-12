@@ -152,6 +152,7 @@
     flex-direction: column;
     flex: 1;
     background-color: var(--secondary-color);
+    height: 100vh;
 }
 
 .chatHeader {
@@ -164,6 +165,10 @@
 
 .chatHeader__left {
     flex: 1;
+}
+
+.chatHeader__left > h3{
+    text-overflow: ellipsis;
 }
 
 .chatHeader__left > h3{
@@ -233,7 +238,13 @@
 .chat__messages {
     flex:1;
     padding: 10px;
+    overflow: auto;
+    scroll-snap-type: none;
 }
+
+.chat__messages::-webkit-scrollbar {
+    display: none;
+  }
 
 .chat__message {
  display: flex;
@@ -251,4 +262,47 @@
     color: grey;
     font-size: small;
     margin-left: 20px;
+}
+
+.login {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100vh;
+}
+
+.login__backgroundVideos {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.login__buttons {
+    justify-content: center;
+    display: flex;
+    padding: 5px;
+    height: 200px;
+    background-color: red;
+}
+
+.login__button {
+    width: 70px;
+    height: 70px;
+    border-radius: 70px;
+    border: none;
+    background-size: cover;
+    cursor: pointer;
+    margin: 0 5px;
+    background-position: center center;
+}
+
+.login__button--google {
+    background-image: url('https://images.theconversation.com/files/93616/original/image-20150902-6700-t2axrz.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1000&fit=clip');
+}
+
+.login__contents {
+    display: flex;
+    flex:1;
 }
