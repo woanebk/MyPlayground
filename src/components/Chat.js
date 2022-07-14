@@ -21,6 +21,10 @@ import { logout, selectUser } from "../features/userSlice";
 import db, { auth } from "../firebase";
 import ChatHeader from "./ChatHeader";
 import Message from "./Message";
+import Lottie from 'react-lottie';
+import animationData from '../assets/lotties/empty-notifications.json'
+
+const defaultBackground = 'https://firebasestorage.googleapis.com/v0/b/myplayground-f12e9.appspot.com/o/backgroundImages%2Fbackground6.gif?alt=media&token=582547f3-a038-4e1c-9fd8-d4b20e0cfd7f'
 
 function Chat() {
   const channel = useSelector(selectChannel);
@@ -40,8 +44,8 @@ function Chat() {
           return doc.data();
         });
         setMessages(listMessages);
+        setTimeout(()=>{scrollToChatBottom()}, 10)
       });
-      setTimeout(()=>{scrollToChatBottom()}, 10)
     }
   }, [channel.channelId]);
 
@@ -60,11 +64,26 @@ function Chat() {
     });
     setInput("");
   };
+
+  const renderAdditionalBackground = () => {
+    if (channel?.channelId) return (
+      <img src={channel?.imageURL || defaultBackground} className="chat__additionalBG"></img>
+    )
+  }
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
   return (
     <div className="chat">
       <ChatHeader />
       <div className="chat__messages">
-        {messages?.map((item, index) => (
+        {channel?.channelId ?
+         messages?.map((item, index) => (
           <Message
             key={index}
             name={item?.user?.displayName}
@@ -72,7 +91,18 @@ function Chat() {
             timeStamp={item?.timeStamp?.toDate().toUTCString()}
             avatarURL={item?.user?.photoURL}
           />
-        ))}
+        ))
+          : (
+            <div className="chat__background">
+              <Lottie
+                options={defaultOptions}
+                height={150}
+                width={150}
+              />
+              <span>No channel selected</span>
+            </div>
+          )
+      }
       </div>
 
       <div className="chat__input">
@@ -101,6 +131,7 @@ function Chat() {
           <EmojiEmotions className="grey white_hover" />
         </div>
       </div>
+      {renderAdditionalBackground()}
     </div>
   );
 }

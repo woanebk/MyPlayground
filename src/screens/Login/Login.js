@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../../App.css";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import {provider} from '../../firebase'
 import { useDispatch, useSelector } from "react-redux";
+import Lottie from 'react-lottie';
+import animationData from '../../assets/lotties/login-dots-red.json'
 
 function Login() {
 
   const user = useSelector((state) => state.user.user);
+
+  useEffect(()=>{
+    document.getElementById('myVideo').play();
+  },[])
 
   const onLoginPress = () => {
     const auth = getAuth();
@@ -32,15 +38,53 @@ function Login() {
       });
   };
 
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
+
   return (
     <div className="login">
-      {/* <video className='login__backgroundVideos' src={"../../assets/    videos/loginVideo.mp4"} autoplay muted loop id="myVideo">
-      </video> */}
-      <div className="login__contents">{user?.displayName}</div>
+      <div className="login__content">
+        <img className="login__logo" src={require('../../assets/images/logo.webp')}/>
+        <h2>Online communicate platform</h2>
+        <p>Connect with anyone, anywhere, anytime so you would never play alone</p>
+      </div>
       <div className="login__buttons">
+        <h3>Join us Using</h3>
         <button
           onClick={onLoginPress}
           className="login__button login__button--google"
+        />
+      </div>
+      <video className='login__backgroundVideos' src={require("../../assets/videos/loginVideo.mp4")} autoplay={true} muted loop id="myVideo">
+      </video>
+      <div className="logo">
+        <h1>Playground</h1>
+      </div>
+      <div className="login__dots login__dot1">
+        <Lottie
+          options={defaultOptions}
+          height={600}
+          width={600}
+        />
+      </div>
+      <div className="login__dots login__dot2">
+        <Lottie
+          options={defaultOptions}
+          height={600}
+          width={600 }
+        />
+      </div>
+      <div className="login__dots login__dot3">
+        <Lottie
+          options={defaultOptions}
+          height={350}
+          width={350}
         />
       </div>
     </div>

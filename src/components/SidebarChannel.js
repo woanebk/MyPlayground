@@ -1,22 +1,22 @@
 import {
-  CopyAllOutlined,
-  ShareOutlined,
-  ShareRounded,
+  CopyAllOutlined
 } from "@mui/icons-material";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "../App.css";
-import { setChannel } from "../features/appSlice";
+import { selectChannel, setChannel } from "../features/appSlice";
 import {CopyToClipboard} from "../utilities/Utilities"
 import { ToastContainer, toast } from 'react-toastify';
 function SidebarChannel({ channel }) {
   const dispatch = useDispatch();
+  const selectedChannel = useSelector(selectChannel)
 
   const handleSetChannel = () => {
     dispatch(
       setChannel({
         channelId: channel?.channelId,
         channelName: channel?.channelName,
+        imageURL: channel?.imageURL,
       })
     );
   };
@@ -27,8 +27,10 @@ function SidebarChannel({ channel }) {
     CopyToClipboard(channel?.channelId);
   };
 
+  const isSelected = channel?.channelId === selectedChannel?.channelId 
+
   return (
-    <div className="sidebar__channel " onClick={handleSetChannel}>
+    <div className={"sidebar__channel " + (isSelected ? 'sidebar__channel--selected' : '')} onClick={handleSetChannel}>
       <h4>
         <span className="sidebarChannel__hash"> #</span>
         {channel?.channelName}

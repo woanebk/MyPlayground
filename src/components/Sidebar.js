@@ -27,7 +27,7 @@ import {
 } from "firebase/firestore";
 import { setChannel } from "../features/appSlice";
 import Search from "./Search";
-import { async } from "@firebase/util";
+import {getRandomBackgroundImages } from "../utilities/Utilities";
 
 function Sidebar() {
   const user = useSelector((state) => state.user.user);
@@ -97,9 +97,14 @@ function Sidebar() {
   const handleSearchChannel = async (e) => {
     e.preventDefault();
     if (channelIdInput) {
-      const channelExist = await isChannelExisted(channelIdInput);
+      const channelExist = await getExistingChannel(channelIdInput);
       if (channelExist) {
         await assignUserToChannel(user?.uid, channelIdInput);
+        dispatch(setChannel({
+          channelId: channelIdInput,
+          channelName: channelExist?.channelName,
+          imageURL: channelExist?.imageURL
+        }))
         await getChannels();
         setChannelIdInput('')
         alert("Joined channel");
@@ -107,19 +112,20 @@ function Sidebar() {
     }
   };
 
-  const isChannelExisted = async (id) => {
+  const getExistingChannel = async (id) => {
     const docSnap = await getDoc(doc(db, "channels/" + id));
-    if (docSnap.exists()) return true;
-    return false;
+    return docSnap.data()
   };
 
   const handleAddChannel = async () => {
     const channelName = prompt("Enter a channel name");
     if (channelName) {
       try {
+        const randomImg = await getRandomBackgroundImages();
         const docRef = await addDoc(collection(db, "channels"), {
           channelName: channelName,
           timeStamp: serverTimestamp(),
+          imageURL: randomImg
         });
         console.log("Channel added with ID: ", docRef.id);
         await assignUserToChannel(user?.uid, docRef.id);
@@ -157,20 +163,22 @@ function Sidebar() {
           </div>
           <Add onClick={handleAddChannel} className="sidebar__addChannel" />
         </div>
-        <form>
-          <Search
-            placeHolder={"Enter Room Id"}
-            value={channelIdInput}
-            onChange={(e) => setChannelIdInput(e.target.value)}
-          />
-          <input
-            type="submit"
-            value=""
-            disabled={false}
-            onClick={handleSearchChannel}
-            className="none-display"
-          />
-        </form>
+        <div className="sidebar__searchChannel">
+          <form>
+            <Search
+              placeHolder={"Enter Room Id"}
+              value={channelIdInput}
+              onChange={(e) => setChannelIdInput(e.target.value)}
+            />
+            <input
+              type="submit"
+              value=""
+              disabled={false}
+              onClick={handleSearchChannel}
+              className="none-display"
+            />
+          </form>
+        </div>
         <div className="channel__List ">
           {channels?.map((item, index) => (
             <SidebarChannel key={index} channel={item}></SidebarChannel>
