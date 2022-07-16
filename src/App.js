@@ -8,15 +8,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, logout, selectUser } from "./features/userSlice";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Loading from "./components/Loading";
+import { selectIsLoading, setIsLoading } from "./features/appSlice";
 
 function App() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-  const [isLoading, setIsLoading] = useState(true);
+  const isLoading = useSelector(selectIsLoading)
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (authUser) => {
-      setIsLoading(true);
+      dispatch(setIsLoading(true))
       if (authUser) {
         dispatch(
           login({
@@ -35,7 +36,7 @@ function App() {
       } else {
         dispatch(logout());
       }
-      setIsLoading(false);
+      dispatch(setIsLoading(false))
     });
   }, [dispatch]);
 
@@ -57,7 +58,10 @@ function App() {
   };
 
   return (
-    <div className="app">{isLoading ? renderLoading() : renderMainApp()}</div>
+    <div className="app">
+      {renderMainApp()}
+      {isLoading && renderLoading()}
+    </div>
   );
 }
 

@@ -7,11 +7,12 @@ import "../App.css";
 import { selectChannel, setChannel } from "../features/appSlice";
 import {CopyToClipboard} from "../utilities/Utilities"
 import { ToastContainer, toast } from 'react-toastify';
-function SidebarChannel({ channel }) {
+function SidebarChannel({ channel, onChangeChannel }) {
   const dispatch = useDispatch();
   const selectedChannel = useSelector(selectChannel)
 
   const handleSetChannel = () => {
+    onChangeChannel();
     dispatch(
       setChannel({
         channelId: channel?.channelId,

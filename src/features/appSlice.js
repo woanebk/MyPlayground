@@ -4,7 +4,7 @@ const initialState = {
   channelId: null,
   channelName: null,
   imageURL: null,
-  isLoading: false
+  isLoading: true
 };
 
 export const appSlice = createSlice({
@@ -20,7 +20,7 @@ export const appSlice = createSlice({
       state.imageURL = action.payload.imageURL;
     },
     setIsLoading: (state, action) => {
-      state.isLoading = action.payload.isLoading
+      state.isLoading = action.payload
     }
   },
 });
@@ -28,5 +28,6 @@ export const appSlice = createSlice({
 export const { setChannelId, setChannel, setIsLoading } = appSlice.actions;
 export const selectChannelId = (state) => state.app.channelId;
 export const selectChannel = (state) => state.app;
+export const selectIsLoading = (state) => state.app.isLoading;
 
 export default appSlice.reducer;

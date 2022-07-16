@@ -147,6 +147,10 @@ overflow:visible;
     padding: 0 5px;
 }
 
+.sidebar__voiceInfo {
+    color: grey;
+}
+
 .sidebar__voiceInfo, .sidebar__profileInfo {
     flex:1;
     padding:0 10px;
@@ -163,7 +167,6 @@ overflow:visible;
 }
 
 .sidebar__voiceInfo > p {
-    color: grey;
     font-size: smaller;
 }
 .sidebar--active {
@@ -446,9 +449,18 @@ overflow:visible;
 }
 
 .loading {
+    z-index: 999;
+    position: absolute;
+    background-color: red;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     display: flex;
-    flex:1;
-    justify-content: center;
     align-items: center;
-    height: 100vh;
+    justify-content: center;
+}
+
+.loading__icon{
+    margin: auto;
 }
