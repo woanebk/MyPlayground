@@ -46,15 +46,15 @@ function Sidebar() {
   const [microphoneEnabled, setMicrophoneEnabled] = useState(false);
   const dispatch = useDispatch();
 
-  const config = { mode: "rtc", codec: "vp8" };
-  const appId = "9a32fec06f9b484d9e28e86115a422f1";
-  const token =
-    "0069a32fec06f9b484d9e28e86115a422f1IAC326v632psCMdk/kch5+k3fNWXBZDbO0EK/sNSqP4oNGTNKL8AAAAAEAAh21UYEzDVYgEAAQDqL9Vi";
-  const name = "main";
-  const useClient = createClient(config);
-  const useMicrophoneAndCameraTracks = createMicrophoneAndCameraTracks();
-  const client = useClient();
-  const { ready, tracks } = useMicrophoneAndCameraTracks();
+  // const config = { mode: "rtc", codec: "vp8" };
+  // const appId = "9a32fec06f9b484d9e28e86115a422f1";
+  // const token =
+  //   "0069a32fec06f9b484d9e28e86115a422f1IAC326v632psCMdk/kch5+k3fNWXBZDbO0EK/sNSqP4oNGTNKL8AAAAAEAAh21UYEzDVYgEAAQDqL9Vi";
+  // const name = "main";
+  // const useClient = createClient(config);
+  // const useMicrophoneAndCameraTracks = createMicrophoneAndCameraTracks();
+  // const client = useClient();
+  // const { ready, tracks } = useMicrophoneAndCameraTracks();
 
   useEffect(() => {
     const unsub = onSnapshot(collection(db, "channels"), async (snapshot) => {
@@ -71,68 +71,68 @@ function Sidebar() {
     });
   }, []);
 
-  useEffect(() => {
-    let init = async (name) => {
-      client.on("user-published", async (user, mediaType) => {
-        await client.subscribe(user, mediaType);
-        if (mediaType === "audio") {
-          // Get the RemoteAudioTrack object in the AgoraRTCRemoteUser object.
-          const remoteAudioTrack = user.audioTrack;
-          // Play the remote audio track.
-          remoteAudioTrack.play();
-        }
-      });
+  // useEffect(() => {
+  //   let init = async (name) => {
+  //     client.on("user-published", async (user, mediaType) => {
+  //       await client.subscribe(user, mediaType);
+  //       if (mediaType === "audio") {
+  //         // Get the RemoteAudioTrack object in the AgoraRTCRemoteUser object.
+  //         const remoteAudioTrack = user.audioTrack;
+  //         // Play the remote audio track.
+  //         remoteAudioTrack.play();
+  //       }
+  //     });
 
-      client.on("user-unpublished", async (user, mediaType) => {
-        if (mediaType === "audio") {
-          if (user.audioTrack) user.audioTrack.stop();
-        }
-        // Unsubscribe from the tracks of the remote user.
-        await client.unsubscribe(user);
-      });
+  //     client.on("user-unpublished", async (user, mediaType) => {
+  //       if (mediaType === "audio") {
+  //         if (user.audioTrack) user.audioTrack.stop();
+  //       }
+  //       // Unsubscribe from the tracks of the remote user.
+  //       await client.unsubscribe(user);
+  //     });
 
-      client.on("user-left", async (user, mediaType) => {
-        if (mediaType === "audio") {
-          if (user.audioTrack) user.audioTrack.stop();
-        }
-        // Unsubscribe from the tracks of the remote user.
-        await client.unsubscribe(user);
-      });
-    };
-    if (ready && tracks) {
-      try {
-        init("main");
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  }, [channel?.channelId, client, ready, tracks]);
+  //     client.on("user-left", async (user, mediaType) => {
+  //       if (mediaType === "audio") {
+  //         if (user.audioTrack) user.audioTrack.stop();
+  //       }
+  //       // Unsubscribe from the tracks of the remote user.
+  //       await client.unsubscribe(user);
+  //     });
+  //   };
+  //   if (ready && tracks) {
+  //     try {
+  //       init("main");
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // }, [channel?.channelId, client, ready, tracks]);
 
-  const handleClickMic = async () => {
-    if (microphoneEnabled) {
-      await endVoiceCall()
-    } else {
-      if (channel?.channelId) {
-        setMicrophoneEnabled(true);
-        //await client.join(appId, name, token, user?.uid);
-        await client.join(appId, name, token, null);
-        // Publish the local audio tracks to the RTC channel.
-        await client.publish([tracks[0], tracks[1]]);
+  // const handleClickMic = async () => {
+  //   if (microphoneEnabled) {
+  //     await endVoiceCall()
+  //   } else {
+  //     if (channel?.channelId) {
+  //       setMicrophoneEnabled(true);
+  //       //await client.join(appId, name, token, user?.uid);
+  //       await client.join(appId, name, token, null);
+  //       // Publish the local audio tracks to the RTC channel.
+  //       await client.publish([tracks[0], tracks[1]]);
 
-        console.log("publish success!");
-      }
-    }
-  };
+  //       console.log("publish success!");
+  //     }
+  //   }
+  // };
 
-  const endVoiceCall = async () => {
-    setMicrophoneEnabled(false);
-    await client.leave();
-    //
-    client.removeAllListeners();
-    tracks[0].close();
-    tracks[1].close();
-    console.log('end voice call')
-  }
+  // const endVoiceCall = async () => {
+  //   setMicrophoneEnabled(false);
+  //   await client.leave();
+  //   //
+  //   client.removeAllListeners();
+  //   tracks[0].close();
+  //   tracks[1].close();
+  //   console.log('end voice call')
+  // }
 
   const getChannels = async () => {
     const res = await getDocs(collection(db, "channels"));
@@ -207,7 +207,7 @@ function Sidebar() {
     const channelName = prompt("Enter a channel name");
     if (channelName) {
       try {
-        dispatch(setIsLoading(true))
+        dispatch(setIsLoading(true));
         const randomImg = await getRandomBackgroundImages();
         const docRef = await addDoc(collection(db, "channels"), {
           channelName: channelName,
@@ -216,10 +216,10 @@ function Sidebar() {
         });
         console.log("Channel added with ID: ", docRef.id);
         await assignUserToChannel(user?.uid, docRef.id);
-        dispatch(setIsLoading(false))
+        dispatch(setIsLoading(false));
       } catch (e) {
         console.error("Error adding channel: ", e);
-        dispatch(setIsLoading(false))
+        dispatch(setIsLoading(false));
       }
     }
   };
@@ -241,7 +241,7 @@ function Sidebar() {
     <div className="sidebar flex">
       <div className="sidebar__top flex">
         <h3>My Playground</h3>
-        <MenuButton/>
+        <MenuButton />
       </div>
 
       <div className="sidebar__channels flex col">
@@ -270,7 +270,14 @@ function Sidebar() {
         </div>
         <div className="channel__List ">
           {channels?.map((item, index) => (
-            <SidebarChannel onChangeChannel={()=>{if(microphoneEnabled)endVoiceCall()}} key={index} channel={item}></SidebarChannel>
+            <SidebarChannel
+              onChangeChannel={() => {
+                // if (microphoneEnabled) endVoiceCall();
+              }
+            }
+              key={index}
+              channel={item}
+            ></SidebarChannel>
           ))}
         </div>
       </div>
