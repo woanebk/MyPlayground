@@ -12,7 +12,7 @@ function SidebarChannel({ channel, onChangeChannel }) {
   const selectedChannel = useSelector(selectChannel)
 
   const handleSetChannel = () => {
-    onChangeChannel();
+    if (selectedChannel) onChangeChannel();
     dispatch(
       setChannel({
         channelId: channel?.channelId,

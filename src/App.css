@@ -268,8 +268,8 @@ overflow:visible;
     padding: 5px 10px;
     border-radius: 5px;
     margin: 0 10px;
-    max-width: 200px;
     min-width: 100px;
+    max-width: 100%;
 }
 
 .searchbox > input{

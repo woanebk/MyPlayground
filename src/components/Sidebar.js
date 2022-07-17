@@ -49,7 +49,7 @@ function Sidebar() {
   const config = { mode: "rtc", codec: "vp8" };
   const appId = "9a32fec06f9b484d9e28e86115a422f1";
   const token =
-    "0069a32fec06f9b484d9e28e86115a422f1IAD3viFxMUJqIBoPXAG6nCcsRmHnqSwrVJn4UWvSkxExaGTNKL8AAAAAEACQKMvtzNnTYgEAAQCj2dNi";
+    "0069a32fec06f9b484d9e28e86115a422f1IAC326v632psCMdk/kch5+k3fNWXBZDbO0EK/sNSqP4oNGTNKL8AAAAAEAAh21UYEzDVYgEAAQDqL9Vi";
   const name = "main";
   const useClient = createClient(config);
   const useMicrophoneAndCameraTracks = createMicrophoneAndCameraTracks();
@@ -131,6 +131,7 @@ function Sidebar() {
     client.removeAllListeners();
     tracks[0].close();
     tracks[1].close();
+    console.log('end voice call')
   }
 
   const getChannels = async () => {
@@ -269,7 +270,7 @@ function Sidebar() {
         </div>
         <div className="channel__List ">
           {channels?.map((item, index) => (
-            <SidebarChannel onChangeChannel={endVoiceCall} key={index} channel={item}></SidebarChannel>
+            <SidebarChannel onChangeChannel={()=>{if(microphoneEnabled)endVoiceCall()}} key={index} channel={item}></SidebarChannel>
           ))}
         </div>
       </div>

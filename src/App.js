@@ -14,6 +14,11 @@ function App() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const isLoading = useSelector(selectIsLoading)
+
+  useEffect(() => {
+    document.title = 'My Playground';
+  },[]);
+
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (authUser) => {
