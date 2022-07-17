@@ -275,7 +275,7 @@ function Sidebar() {
         </div>
       </div>
 
-      <div className="sidebar__voice flex ">
+      {/* <div className="sidebar__voice flex ">
         <SignalCellularAlt
           className={"sidebar__voiceIcon " + (microphoneEnabled && "sidebar--active")}
           fontSize="large"
@@ -293,7 +293,7 @@ function Sidebar() {
             )}
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="sidebar__profile flex">
         <Avatar className="pointer" onClick={logOut} src={user?.photoURL} />
