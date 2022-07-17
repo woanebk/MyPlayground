@@ -10,6 +10,8 @@ import {
   MicOutlined,
   Settings,
   MicOffOutlined,
+  CallEndOutlined,
+  CallMissedOutlined,
 } from "@mui/icons-material";
 import SidebarChannel from "./SidebarChannel";
 import { Avatar } from "@mui/material";
@@ -34,6 +36,7 @@ import {
   createClient,
   createMicrophoneAndCameraTracks,
 } from "agora-rtc-react";
+import MenuButton from "./MenuButton";
 
 function Sidebar() {
   const user = useSelector((state) => state.user.user);
@@ -237,7 +240,7 @@ function Sidebar() {
     <div className="sidebar flex">
       <div className="sidebar__top flex">
         <h3>My Playground</h3>
-        <ExpandMore />
+        <MenuButton/>
       </div>
 
       <div className="sidebar__channels flex col">
@@ -288,7 +291,6 @@ function Sidebar() {
               <MicOffOutlined className="pointer" />
             )}
           </div>
-          <Headset className="pointer" />
         </div>
       </div>
 
@@ -301,7 +303,6 @@ function Sidebar() {
 
         <div className="sidebar__profileIcons flex col">
           <InfoOutlined className="pointer" />
-          <Call className="pointer" />
           <Settings className="pointer" />
         </div>
       </div>

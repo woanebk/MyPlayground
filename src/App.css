@@ -74,6 +74,8 @@ overflow:visible;
 
 .sidebar__channels {
     flex:1;
+    max-height: 100vh;
+    overflow: hidden;
 }
 
 .sidebar__channelsHeader {
@@ -88,6 +90,16 @@ overflow:visible;
 .sidebar__searchChannel {
     padding-bottom: 10px;
 }
+
+.channel__List {
+    flex: 1;
+    overflow: auto;
+    scroll-snap-type: none;
+}
+
+.channel__List::-webkit-scrollbar {
+    display: none;
+  }
 .sidebar__addChannel {
     cursor: pointer;
 }
@@ -189,6 +201,7 @@ overflow:visible;
     max-height: 100vh;
     overflow: hidden;
     position: relative;
+    height: 100vh;
 }
 
 .chat__additionalBG {
@@ -217,6 +230,7 @@ overflow:visible;
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
+    width: 100%;
 }
 
 .chatHeader__left > h3{
@@ -246,7 +260,7 @@ overflow:visible;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-    min-width: 400px;
+    min-width: 300px;
 }
 
 .searchbox {
@@ -254,6 +268,8 @@ overflow:visible;
     padding: 5px 10px;
     border-radius: 5px;
     margin: 0 10px;
+    max-width: 200px;
+    min-width: 100px;
 }
 
 .searchbox > input{
@@ -464,3 +480,36 @@ overflow:visible;
 .loading__icon{
     margin: auto;
 }
+
+.chatHeader__leftMenuBtn {
+    display: none;
+}
+
+@media screen and (max-width: 480px) {
+    .sidebar{
+        position: absolute;
+        z-index: 9999;
+    }
+
+    .chatHeader {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        height: 40px;
+    }
+
+    .chatHeader__leftMenuBtn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        cursor: pointer;
+    }
+  }
+
+  /* Ensure that sidebar is always shown in pc */
+  @media screen and (min-width: 481px) {
+    .sidebar{
+        display: flex !important;
+    }
+  }

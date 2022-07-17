@@ -3,6 +3,7 @@ import {
   EditLocation,
   HelpCenterRounded,
   HelpOutline,
+  Menu,
   NotificationAdd,
   PeopleAlt,
   SendRounded,
@@ -12,13 +13,16 @@ import { useSelector } from "react-redux";
 import "../App.css";
 import { selectChannel } from "../features/appSlice";
 import { CopyToClipboard } from "../utilities/Utilities";
+import MenuButton from "./MenuButton";
 import Search from "./Search";
 
 function ChatHeader({ onHelpClick }) {
   const channel = useSelector(selectChannel);
+
   return (
     <div className="chatHeader">
       <div className="chatHeader__left grey">
+        <MenuButton/>
         <h3>
           <span className="chatHeader__hash"># </span> {channel?.channelName}
         </h3>
