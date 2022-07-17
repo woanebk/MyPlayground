@@ -358,6 +358,7 @@ overflow:visible;
     flex-direction: column;
     flex: 1;
     height: 100vh;
+    width: 100vw;
     background-color: black;
 }
 
@@ -388,10 +389,10 @@ overflow:visible;
 }
 
 .login__content > p {
-    margin-top: 20px;
     font-size: medium;
     max-width: 500px;
     text-align: center;
+    margin: 20px 5px 0;
 }
 
 .login__logo {
@@ -504,6 +505,11 @@ overflow:visible;
         align-items: center;
         padding: 10px;
         cursor: pointer;
+    }
+
+    .login__logo {
+        max-width: 250px;
+        max-height: 250px;
     }
   }
 
